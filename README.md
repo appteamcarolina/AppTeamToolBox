@@ -1,3 +1,3 @@
 # AppTeamToolBox
 
-A description of this package.
+A set of convenience tools for App Team Carolina.
