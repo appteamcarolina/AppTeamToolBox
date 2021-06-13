@@ -1,7 +1,7 @@
 import SwiftUI
 
 @available(macOS 11.0, *)
-extension View {
+public extension View {
     /// Convenience function to apply accessibility modifiers to a SwiftUI `View`
     /// - Parameters:
     ///   - label: `accessibilityLabel` to apply
