@@ -1,5 +1,13 @@
+//
+//  Accessibility.swift
+//
+//
+//  Created by Max Nabokow on 6/13/21.
+//
+
 import SwiftUI
 
+@available(iOS 14.0, *)
 @available(macOS 11.0, *)
 public extension View {
     /// Convenience function to apply accessibility modifiers to a SwiftUI `View`
