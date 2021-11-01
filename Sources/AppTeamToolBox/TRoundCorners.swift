@@ -12,6 +12,7 @@ struct CustomRoundedRectangle: Shape {
     var radius: CGFloat
     var corners: UIRectCorner = .allCorners
 
+    @available(iOS 13.0, *)
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(
             roundedRect: rect,
@@ -22,6 +23,7 @@ struct CustomRoundedRectangle: Shape {
     }
 }
 
+@available(iOS 13.0, *)
 extension View {
     func tRoundCorners(_ radius: CGFloat = 12, corners: UIRectCorner = .allCorners) -> some View {
         clipShape(
