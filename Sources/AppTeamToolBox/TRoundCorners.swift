@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct CustomRoundedRectangle: Shape {
+public struct CustomRoundedRectangle: Shape {
     var radius: CGFloat
     var corners: UIRectCorner = .allCorners
 
     @available(iOS 13.0, *)
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(
             roundedRect: rect,
             byRoundingCorners: corners,
@@ -24,7 +24,12 @@ struct CustomRoundedRectangle: Shape {
 }
 
 @available(iOS 13.0, *)
-extension View {
+public extension View {
+    /// View function to apply rounding to individual corners of a View
+    /// - Parameters:
+    ///   - radius: radius to be for the corner
+    ///   - corners: set of corners to be rounded, use `.allCorners` to apply to all 4
+    /// - Returns: `View` with specified corners rounded. Warning: This makes the `View` clip its content to its new shape
     func tRoundCorners(_ radius: CGFloat = 12, corners: UIRectCorner = .allCorners) -> some View {
         clipShape(
             CustomRoundedRectangle(
