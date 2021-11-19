@@ -52,7 +52,7 @@ public struct AnimationCompletionObserverModifier<Value>: AnimatableModifier whe
         }
     }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         /// We're not really modifying the view so we can directly return the original input value.
         return content
     }
