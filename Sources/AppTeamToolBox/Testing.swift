@@ -7,7 +7,7 @@
 
 import XCTest
 
-extension XCTestCase {
+public extension XCTestCase {
     func wait(for duration: TimeInterval) {
         let waitExpectation = expectation(description: "Waiting")
 
