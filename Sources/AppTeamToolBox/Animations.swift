@@ -8,6 +8,7 @@
 import SwiftUI
 
 @available(iOS 13.0, *)
+@available(macOS 10.15, *)
 public extension View {
     /// Calls the completion handler whenever an animation on the given value completes.
     /// - Parameters:
@@ -21,6 +22,7 @@ public extension View {
 
 /// An animatable modifier that is used for observing animations for a given animatable value.
 @available(iOS 13.0, *)
+@available(macOS 10.15, *)
 public struct AnimationCompletionObserverModifier<Value>: AnimatableModifier where Value: VectorArithmetic {
     /// While animating, SwiftUI changes the old input value to the new target value using this property. This value is set to the old value until the animation completes.
     public var animatableData: Value {

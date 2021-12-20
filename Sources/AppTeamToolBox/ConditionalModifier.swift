@@ -8,6 +8,7 @@
 import SwiftUI
 
 @available(iOS 13.0, *)
+@available(macOS 10.15, *)
 public extension View {
     @ViewBuilder
     /// Applies `View` modifer(s) only if `condition` is true

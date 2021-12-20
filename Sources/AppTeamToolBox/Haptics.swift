@@ -5,8 +5,8 @@
 //  Created by Max Nabokow on 5/22/20.
 //
 
+#if os(iOS) || os(watchOS) || os(tvOS)
 import SwiftUI
-
 @available(iOS 13.0, *)
 public class Haptics {
     private static let notificationGeneratoor = UINotificationFeedbackGenerator()
@@ -180,3 +180,4 @@ private extension DispatchQueue {
         return "\(Unmanaged.passUnretained(object).toOpaque())." + String(describing: object)
     }
 }
+#endif

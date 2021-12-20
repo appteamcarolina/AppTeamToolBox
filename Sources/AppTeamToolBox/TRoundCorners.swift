@@ -6,6 +6,7 @@
 //  Copyright © 2020 Maximilian Nabokow. All rights reserved.
 //
 
+#if os(iOS) || os(watchOS) || os(tvOS)
 import SwiftUI
 
 public struct CustomRoundedRectangle: Shape {
@@ -39,3 +40,4 @@ public extension View {
         )
     }
 }
+#endif
