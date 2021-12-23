@@ -11,7 +11,11 @@ import SwiftUI
 @available(iOS 13.0, *)
 public struct TBlurView: UIViewRepresentable {
     public typealias UIViewType = UIView
-    public var style: UIBlurEffect.Style = .systemMaterial
+    let style: UIBlurEffect.Style
+    
+    public init(style: UIBlurEffect.Style = .systemMaterial) {
+        self.style = style
+    }
     
     public func makeUIView(context: UIViewRepresentableContext<TBlurView>) -> UIView {
         let view = UIView(frame: CGRect.zero)
