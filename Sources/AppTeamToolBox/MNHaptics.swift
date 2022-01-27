@@ -1,6 +1,6 @@
 //
-//  Haptics.swift
-//
+//  MNHaptics.swift
+//  AppTeamToolBox
 //
 //  Created by Max Nabokow on 5/22/20.
 //
@@ -8,7 +8,7 @@
 #if os(iOS) || os(watchOS) || os(tvOS)
 import SwiftUI
 @available(iOS 13.0, *)
-public class Haptics {
+public class MNHaptics {
     private static let notificationGeneratoor = UINotificationFeedbackGenerator()
     private static let impactLight = UIImpactFeedbackGenerator(style: .light)
     private static let impactMedium = UIImpactFeedbackGenerator(style: .medium)

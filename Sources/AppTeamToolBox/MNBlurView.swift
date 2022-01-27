@@ -1,6 +1,6 @@
 //
-//  BlurView.swift
-//  Trove
+//  MNBlurView.swift
+//  AppTeamToolBox
 //
 //  Created by Max Nabokow on 7/4/20.
 //  Copyright © 2020 Maximilian Nabokow. All rights reserved.
@@ -9,7 +9,7 @@
 import SwiftUI
 
 @available(iOS 13.0, *)
-public struct TBlurView: UIViewRepresentable {
+public struct MNBlurView: UIViewRepresentable {
     public typealias UIViewType = UIView
     let style: UIBlurEffect.Style
     
@@ -17,7 +17,7 @@ public struct TBlurView: UIViewRepresentable {
         self.style = style
     }
     
-    public func makeUIView(context: UIViewRepresentableContext<TBlurView>) -> UIView {
+    public func makeUIView(context: UIViewRepresentableContext<MNBlurView>) -> UIView {
         let view = UIView(frame: CGRect.zero)
         view.backgroundColor = .clear
         
@@ -35,5 +35,5 @@ public struct TBlurView: UIViewRepresentable {
         return view
     }
     
-    public func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<TBlurView>) {}
+    public func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<MNBlurView>) {}
 }
