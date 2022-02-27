@@ -21,8 +21,4 @@ let package = Package(
         .target(
             name: "AppTeamToolBox",
             dependencies: []),
-        .testTarget(
-            name: "AppTeamToolBoxTests",
-            dependencies: ["AppTeamToolBox"]),
-    ]
-)
+    ])
