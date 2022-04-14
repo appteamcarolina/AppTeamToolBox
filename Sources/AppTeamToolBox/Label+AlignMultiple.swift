@@ -50,15 +50,15 @@ struct EqualIconWidthLabelStyle: LabelStyle {
     }
 }
 
-struct EqualIconWidthDomain<Content: View>: View {
+public struct EqualIconWidthDomain<Content: View>: View {
     let content: Content
     @State var iconWidth: CGFloat? = nil
 
-    init(@ViewBuilder _ content: () -> Content) {
+    public init(@ViewBuilder _ content: () -> Content) {
         self.content = content()
     }
 
-    var body: some View {
+    public var body: some View {
         content
             .environment(\.iconWidth, iconWidth)
             .onPreferenceChange(IconWidthKey.self) { self.iconWidth = $0 }
