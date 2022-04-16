@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 public extension View {
     func foregroundLinearGradient(
         colors: [Color],
