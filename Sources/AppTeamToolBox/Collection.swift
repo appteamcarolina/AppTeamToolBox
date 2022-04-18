@@ -27,3 +27,13 @@ public extension Collection {
         }
     }
 }
+
+public extension Array {
+    subscript(index: Int, default defaultValue: @autoclosure () -> Element) -> Element {
+        guard index >= 0, index < endIndex else {
+            return defaultValue()
+        }
+
+        return self[index]
+    }
+}
