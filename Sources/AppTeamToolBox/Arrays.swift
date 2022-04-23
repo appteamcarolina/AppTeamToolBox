@@ -8,9 +8,9 @@
 import Foundation
 
 public extension BidirectionalCollection {
-    subscript(safe offset: Int) -> Element? {
-        guard !isEmpty, let i = index(startIndex, offsetBy: offset, limitedBy: index(before: endIndex)) else { return nil }
-        return self[i]
+    subscript(safe offset: Index) -> Element? {
+        guard !isEmpty, indices.contains(offset) else { return nil }
+        return self[offset]
     }
 }
 
