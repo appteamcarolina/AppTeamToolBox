@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension BidirectionalCollection {
+public extension Collection {
     subscript(safe offset: Index) -> Element? {
         guard !isEmpty, offset >= startIndex, offset < endIndex else { return nil }
         return self[offset]
