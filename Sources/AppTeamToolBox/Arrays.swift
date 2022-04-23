@@ -9,7 +9,7 @@ import Foundation
 
 public extension BidirectionalCollection {
     subscript(safe offset: Index) -> Element? {
-        guard !isEmpty, indices.contains(offset) else { return nil }
+        guard !isEmpty, offset >= startIndex, offset < endIndex else { return nil }
         return self[offset]
     }
 }
