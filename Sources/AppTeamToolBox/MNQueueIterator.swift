@@ -10,12 +10,13 @@ import Foundation
 public struct MNQueueIterator<Element: Identifiable> {
     // MARK: PRIVATE
     private var items: [Element]
-    private var currIndex: Int = 0
+    private var currIndex: Int
 
     // MARK: PUBLIC
     
     public init(_ elements: [Element]) {
         self.items = elements
+        currIndex = 0
     }
     
     public var elements: [Element] { items }
@@ -40,6 +41,11 @@ public struct MNQueueIterator<Element: Identifiable> {
 
     public mutating func insertAtCurrentIndex(_ element: Element) {
         items.insert(element, at: currIndex)
+        fixIndexIfNeeded()
+    }
+    
+    public mutating func setAllItems(to elements: [Element]) {
+        self.items = elements
         fixIndexIfNeeded()
     }
 
