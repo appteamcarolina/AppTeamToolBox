@@ -8,37 +8,39 @@
 import Foundation
 
 public struct MNQueueIterator<Element: Identifiable> {
-    private(set) var items: [Element]
-    private(set) var currentIndex: Int = 0
+    // MARK: PRIVATE
+    private var items: [Element]
+    private var currIndex: Int = 0
 
-    public init(_ items: [Element]) {
-        self.items = items
+    // MARK: PUBLIC
+    
+    public init(_ elements: [Element]) {
+        self.items = elements
     }
+    
+    public var elements: [Element] { items }
+    public var currentIndex: Int { currIndex }
 
     public var current: Element? {
-        return items[safe: currentIndex]
+        return items[safe: currIndex]
     }
 
     public var count: Int { items.count }
     public var isEmpty: Bool { items.isEmpty }
 
-    public mutating func setAllItems(to items: [Element]) {
-        self.items = items
-        fixIndexIfNeeded()
-    }
-
     public mutating func prev() {
-        currentIndex -= 1
+        currIndex -= 1
         fixIndexIfNeeded()
     }
 
     public mutating func next() {
-        currentIndex += 1
+        currIndex += 1
         fixIndexIfNeeded()
     }
 
     public mutating func insertAtCurrentIndex(_ element: Element) {
-        items.insert(element, at: currentIndex)
+        items.insert(element, at: currIndex)
+        fixIndexIfNeeded()
     }
 
     @discardableResult
@@ -46,16 +48,26 @@ public struct MNQueueIterator<Element: Identifiable> {
         guard !items.isEmpty else { return nil }
 
         defer { fixIndexIfNeeded() }
-        return items.remove(at: currentIndex)
+        return items.remove(at: currIndex)
     }
+    
+    @discardableResult
+    public mutating func removeAll() -> [Element]? {
+        guard !items.isEmpty else { return nil }
+        currIndex = -1
+        defer { items.removeAll() }
+        return items
+    }
+    
+    // MARK: Private Helpers
 
     private mutating func fixIndexIfNeeded() {
-        guard !items.isEmpty else { currentIndex = 0; return }
+        guard !items.isEmpty else { currIndex = -1; return }
 
-        if currentIndex >= items.endIndex {
-            currentIndex = items.endIndex - 1
-        } else if currentIndex < 0 {
-            currentIndex = 0
+        if currIndex >= items.endIndex {
+            currIndex = items.endIndex - 1
+        } else if currIndex < 0 {
+            currIndex = 0
         }
     }
 }
