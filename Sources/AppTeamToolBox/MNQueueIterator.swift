@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MNQueueIterator<Element: Identifiable> {
+public struct MNQueueIterator<Element: Identifiable> {
     private(set) var items: [Element]
     private(set) var currentIndex: Int = 0
 
