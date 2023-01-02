@@ -26,9 +26,9 @@ public struct CustomRoundedRectangle: Shape {
 
 @available(iOS 13.0, *)
 public extension View {
-    /// View function to apply rounding to individual corners of a View
+    /// Applies rounding to any of the individual corners of a View, using the `.continuous` type of SwiftUI's `RoundedCornerStyle`
     /// - Parameters:
-    ///   - radius: radius to be for the corner
+    ///   - radius: radius to be used for the corner(s)
     ///   - corners: set of corners to be rounded, use `.allCorners` to apply to all 4
     /// - Returns: `View` with specified corners rounded. Warning: This makes the `View` clip its content to its new shape
     func mnRoundCorners(_ radius: CGFloat = 12, corners: UIRectCorner = .allCorners) -> some View {
