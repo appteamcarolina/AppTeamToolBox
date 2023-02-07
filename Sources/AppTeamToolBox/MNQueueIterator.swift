@@ -10,7 +10,7 @@ import Foundation
 public struct MNQueueIterator<Element: Identifiable> {
     // MARK: PRIVATE
     private var items: [Element]
-    private var currIndex: Int
+    private var currIndex: Int?
 
     // MARK: PUBLIC
     
@@ -20,27 +20,31 @@ public struct MNQueueIterator<Element: Identifiable> {
     }
     
     public var elements: [Element] { items }
-    public var currentIndex: Int { currIndex }
+    public var currentIndex: Int? { currIndex }
 
     public var current: Element? {
-        return items[safe: currIndex]
+        if(currIndex == nil) { return nil }
+        return items[safe: currIndex!]
     }
 
     public var count: Int { items.count }
     public var isEmpty: Bool { items.isEmpty }
 
     public mutating func prev() {
-        currIndex -= 1
+        if(currIndex == nil) { return }
+        currIndex! -= 1
         fixIndexIfNeeded()
     }
 
     public mutating func next() {
-        currIndex += 1
+        if(currIndex == nil) { return }
+        currIndex! += 1
         fixIndexIfNeeded()
     }
 
     public mutating func insertAtCurrentIndex(_ element: Element) {
-        items.insert(element, at: currIndex)
+        if(currIndex == nil) { currIndex = 0 }
+        items.insert(element, at: currIndex!)
         fixIndexIfNeeded()
     }
     
@@ -54,13 +58,14 @@ public struct MNQueueIterator<Element: Identifiable> {
         guard !items.isEmpty else { return nil }
 
         defer { fixIndexIfNeeded() }
-        return items.remove(at: currIndex)
+        if(currIndex == nil) { return nil }
+        return items.remove(at: currIndex!)
     }
     
     @discardableResult
     public mutating func removeAll() -> [Element]? {
         guard !items.isEmpty else { return nil }
-        currIndex = -1
+        currIndex! = -1
         defer { items.removeAll() }
         return items
     }
@@ -68,12 +73,12 @@ public struct MNQueueIterator<Element: Identifiable> {
     // MARK: Private Helpers
 
     private mutating func fixIndexIfNeeded() {
-        guard !items.isEmpty else { currIndex = -1; return }
-
-        if currIndex >= items.endIndex {
-            currIndex = items.endIndex - 1
-        } else if currIndex < 0 {
-            currIndex = 0
+        guard !items.isEmpty else { currIndex = nil; return }
+        if(currIndex == nil) { return }
+        if currIndex! >= items.endIndex {
+            currIndex! = items.endIndex - 1
+        } else if currIndex! < 0 {
+            currIndex! = 0
         }
     }
 }
