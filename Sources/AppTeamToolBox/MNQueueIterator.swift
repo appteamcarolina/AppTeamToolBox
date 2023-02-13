@@ -9,13 +9,14 @@ import Foundation
 
 public struct MNQueueIterator<Element: Identifiable> {
     // MARK: PRIVATE
+
     private var items: [Element]
     private var currIndex: Int?
 
     // MARK: PUBLIC
     
     public init(_ elements: [Element]) {
-        self.items = elements
+        items = elements
         currIndex = 0
     }
     
@@ -49,7 +50,7 @@ public struct MNQueueIterator<Element: Identifiable> {
     }
     
     public mutating func setAllItems(to elements: [Element]) {
-        self.items = elements
+        items = elements
         fixIndexIfNeeded()
     }
 
@@ -91,7 +92,7 @@ public struct MNQueueIterator<Element: Identifiable> {
         // If we got here, there are definitely items and the index is non-nil
         // So, we adjust the index to make sure its not out of bounds
         
-        let validRange = 0...items.endIndex-1
+        let validRange = 0 ... items.endIndex - 1
         currIndex!.clipToRange(validRange)
     }
 }
