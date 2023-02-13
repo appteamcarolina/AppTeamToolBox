@@ -65,18 +65,24 @@ public struct MNQueueIterator<Element: Identifiable> {
     }
     
     @discardableResult
-    public mutating func removeAll() -> [Element]? {
-        guard !items.isEmpty else { return nil }
-        currIndex! = -1
-        defer { items.removeAll() }
-        return items
+    public mutating func removeAll() -> [Element] {
+        // Make sure items isn't empty already
+        guard !items.isEmpty else { return [] }
+        
+        let copy = items // Keep a copy of the items in the array to return later
+        
+        items.removeAll()
+        
+        fixIndexIfNeeded()
+        
+        return copy
     }
     
     // MARK: Private Helpers
 
     private mutating func fixIndexIfNeeded() {
         // Only proceed if the index was valid before
-        // If it was invalid (nil), we don't know what to fix it to
+        // If it was invalid (nil), we don't know what to fix it to, so we keep it as is
         guard currIndex != nil else { return }
         
         // Only proceed if there are items, else invalidate index since there are no elements to index into
@@ -85,10 +91,7 @@ public struct MNQueueIterator<Element: Identifiable> {
         // If we got here, there are definitely items and the index is non-nil
         // So, we adjust the index to make sure its not out of bounds
         
-        if currIndex! >= items.endIndex {
-            currIndex! = items.endIndex - 1
-        } else if currIndex! < 0 {
-            currIndex! = 0
-        }
+        let validRange = 0...items.endIndex-1
+        currIndex!.clipToRange(validRange)
     }
 }
