@@ -23,27 +23,27 @@ public struct MNQueueIterator<Element: Identifiable> {
     public var currentIndex: Int? { currIndex }
 
     public var current: Element? {
-        if(currIndex == nil) { return nil }
-        return items[safe: currIndex!]
+        guard let currIndex = currentIndex else { return nil }
+        return items[safe: currIndex]
     }
 
     public var count: Int { items.count }
     public var isEmpty: Bool { items.isEmpty }
 
     public mutating func prev() {
-        if(currIndex == nil) { return }
+        guard currIndex != nil else { return }
         currIndex! -= 1
         fixIndexIfNeeded()
     }
 
     public mutating func next() {
-        if(currIndex == nil) { return }
+        guard currIndex != nil else { return }
         currIndex! += 1
         fixIndexIfNeeded()
     }
 
     public mutating func insertAtCurrentIndex(_ element: Element) {
-        if(currIndex == nil) { currIndex = 0 }
+        if currIndex == nil { currIndex = 0 }
         items.insert(element, at: currIndex!)
         fixIndexIfNeeded()
     }
@@ -55,11 +55,13 @@ public struct MNQueueIterator<Element: Identifiable> {
 
     @discardableResult
     public mutating func removeCurrent() -> Element? {
-        guard !items.isEmpty else { return nil }
+        guard !items.isEmpty, let currIndex else { return nil }
 
-        defer { fixIndexIfNeeded() }
-        if(currIndex == nil) { return nil }
-        return items.remove(at: currIndex!)
+        let removedItem = items.remove(at: currIndex)
+        
+        fixIndexIfNeeded() // Fix indices if currIndex is now invalid after the removal
+        
+        return removedItem
     }
     
     @discardableResult
@@ -73,8 +75,16 @@ public struct MNQueueIterator<Element: Identifiable> {
     // MARK: Private Helpers
 
     private mutating func fixIndexIfNeeded() {
+        // Only proceed if the index was valid before
+        // If it was invalid (nil), we don't know what to fix it to
+        guard currIndex != nil else { return }
+        
+        // Only proceed if there are items, else invalidate index since there are no elements to index into
         guard !items.isEmpty else { currIndex = nil; return }
-        if(currIndex == nil) { return }
+        
+        // If we got here, there are definitely items and the index is non-nil
+        // So, we adjust the index to make sure its not out of bounds
+        
         if currIndex! >= items.endIndex {
             currIndex! = items.endIndex - 1
         } else if currIndex! < 0 {
