@@ -61,7 +61,7 @@ public struct MNQueueIterator<Element: Identifiable> {
         let removedItem = items.remove(at: currIndex)
 
         fixIndexIntoRange() // Fix indices if currIndex is now invalid after the removal
-
+        
         return removedItem
     }
 
