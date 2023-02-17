@@ -14,12 +14,12 @@ public struct MNQueueIterator<Element: Identifiable> {
     private var currIndex: Int?
 
     // MARK: PUBLIC
-    
+
     public init(_ elements: [Element]) {
         items = elements
-        currIndex = 0
+        currIndex = !items.isEmpty ? 0 : nil // When there are items, set to 0, else nil
     }
-    
+
     public var elements: [Element] { items }
     public var currentIndex: Int? { currIndex }
 
@@ -34,24 +34,24 @@ public struct MNQueueIterator<Element: Identifiable> {
     public mutating func prev() {
         guard currIndex != nil else { return }
         currIndex! -= 1
-        fixIndexIfNeeded()
+        fixIndexIntoRange()
     }
 
     public mutating func next() {
         guard currIndex != nil else { return }
         currIndex! += 1
-        fixIndexIfNeeded()
+        fixIndexIntoRange()
     }
 
     public mutating func insertAtCurrentIndex(_ element: Element) {
         if currIndex == nil { currIndex = 0 }
         items.insert(element, at: currIndex!)
-        fixIndexIfNeeded()
+        fixIndexIntoRange()
     }
-    
+
     public mutating func setAllItems(to elements: [Element]) {
         items = elements
-        fixIndexIfNeeded()
+        currIndex = !items.isEmpty ? 0 : nil // When there are items, set to 0, else nil
     }
 
     @discardableResult
@@ -59,39 +59,39 @@ public struct MNQueueIterator<Element: Identifiable> {
         guard !items.isEmpty, let currIndex else { return nil }
 
         let removedItem = items.remove(at: currIndex)
-        
-        fixIndexIfNeeded() // Fix indices if currIndex is now invalid after the removal
+
+        fixIndexIntoRange() // Fix indices if currIndex is now invalid after the removal
         
         return removedItem
     }
-    
+
     @discardableResult
     public mutating func removeAll() -> [Element] {
         // Make sure items isn't empty already
         guard !items.isEmpty else { return [] }
-        
+
         let copy = items // Keep a copy of the items in the array to return later
-        
+
         items.removeAll()
-        
-        fixIndexIfNeeded()
-        
+
+        fixIndexIntoRange()
+
         return copy
     }
-    
+
     // MARK: Private Helpers
 
-    private mutating func fixIndexIfNeeded() {
+    private mutating func fixIndexIntoRange() {
         // Only proceed if the index was valid before
         // If it was invalid (nil), we don't know what to fix it to, so we keep it as is
         guard currIndex != nil else { return }
-        
+
         // Only proceed if there are items, else invalidate index since there are no elements to index into
         guard !items.isEmpty else { currIndex = nil; return }
-        
+
         // If we got here, there are definitely items and the index is non-nil
         // So, we adjust the index to make sure its not out of bounds
-        
+
         let validRange = 0 ... items.endIndex - 1
         currIndex!.clipToRange(validRange)
     }
