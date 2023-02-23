@@ -51,8 +51,16 @@ public struct MNQueueIterator<Element: Identifiable> {
 
     public mutating func setAllItems(to elements: [Element]) {
         items = elements
-        currIndex = !items.isEmpty ? 0 : nil // When there are items, set to 0, else nil
+        
+        // If there are items and index was previously invalid, start iterating from index zero
+        if !items.isEmpty && currIndex == nil {
+            currIndex = 0
+        }
+        
+        // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
+        fixIndexIntoRange()
     }
+    
 
     @discardableResult
     public mutating func removeCurrent() -> Element? {
