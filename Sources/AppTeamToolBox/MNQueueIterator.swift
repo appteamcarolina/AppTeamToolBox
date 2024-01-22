@@ -10,7 +10,7 @@ import Foundation
 public struct MNQueueIterator<Element: Identifiable> {
     // MARK: PRIVATE
     
-    private var indexedItems = []
+    private var var myArray: [(Int, String)] = []
     private var items: [Element]
     private var currIndex: Int?
 
@@ -20,7 +20,7 @@ public struct MNQueueIterator<Element: Identifiable> {
         items = elements
         currIndex = !items.isEmpty ? 0 : nil // When there are items, set to 0, else nil
         for index in 0...items.count{
-            indexedItems.append([index,items[i]])
+            indexedItems.append([index,items[index]])
         }
         print(indexedItems)
     }
@@ -58,7 +58,7 @@ public struct MNQueueIterator<Element: Identifiable> {
 //        let unsortedArrayID = Set(elements.map { $0.id })
 //        let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
         
-        items = sortedArray
+        items = elements
         // If there are items and index was previously invalid, start iterating from index zero
         if !items.isEmpty && currIndex == nil {
             currIndex = 0
