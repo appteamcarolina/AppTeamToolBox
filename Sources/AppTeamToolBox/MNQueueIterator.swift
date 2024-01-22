@@ -9,7 +9,8 @@ import Foundation
 
 public struct MNQueueIterator<Element: Identifiable> {
     // MARK: PRIVATE
-
+    
+    private var indexedItems = []
     private var items: [Element]
     private var currIndex: Int?
 
@@ -18,6 +19,10 @@ public struct MNQueueIterator<Element: Identifiable> {
     public init(_ elements: [Element]) {
         items = elements
         currIndex = !items.isEmpty ? 0 : nil // When there are items, set to 0, else nil
+        for index in 0...items.count{
+            indexedItems.append([index,items[i]])
+        }
+        print(indexedItems)
     }
 
     public var elements: [Element] { items }
@@ -48,10 +53,10 @@ public struct MNQueueIterator<Element: Identifiable> {
         items.insert(element, at: currIndex!)
         fixIndexIntoRange()
     }
-
-    public mutating func setAllItems(to elements: [Element]) {
-        let unsortedArrayID = Set(elements.map { $0.id })
-        let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
+    
+    public mutating func reorderItems(to elements: [element]){
+//        let unsortedArrayID = Set(elements.map { $0.id })
+//        let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
         
         items = sortedArray
         // If there are items and index was previously invalid, start iterating from index zero
@@ -59,6 +64,17 @@ public struct MNQueueIterator<Element: Identifiable> {
             currIndex = 0
         }
         print(items, "AFTERRRR_____\n\n\n\n")
+        // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
+        fixIndexIntoRange()
+        
+    }
+
+    public mutating func setAllItems(to elements: [Element]) {
+        items = elements
+        // If there are items and index was previously invalid, start iterating from index zero
+        if !items.isEmpty && currIndex == nil {
+            currIndex = 0
+        }
         // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
         fixIndexIntoRange()
     }
