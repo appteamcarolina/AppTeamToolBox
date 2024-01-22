@@ -51,12 +51,12 @@ public struct MNQueueIterator<Element: Identifiable> {
 
     public mutating func setAllItems(to elements: [Element]) {
         items = elements
-        print(items)
+        print(items, "BEFOREEEE____\n\n\n\n")
         // If there are items and index was previously invalid, start iterating from index zero
         if !items.isEmpty && currIndex == nil {
             currIndex = 0
         }
-        
+        print(items, "AFTERRRR_____\n\n\n\n")
         // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
         fixIndexIntoRange()
     }
