@@ -51,7 +51,8 @@ public struct MNQueueIterator<Element: Identifiable> {
 
     public mutating func setAllItems(to elements: [Element]) {
         var sortedItems = elements
-        items = sortedItems.filter { elements.contains($0) }
+        let unsortedList = Set(elements)
+        items = sortedItems.filter { unsortedList.contains($0) }
         // If there are items and index was previously invalid, start iterating from index zero
         if !items.isEmpty && currIndex == nil {
             currIndex = 0
