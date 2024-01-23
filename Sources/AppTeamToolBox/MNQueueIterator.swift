@@ -10,7 +10,6 @@ import Foundation
 public struct MNQueueIterator<Element: Identifiable> {
     // MARK: PRIVATE
     
-    private var indexedItems: [(Int, Element)] = []
     private var items: [Element]
     private var currIndex: Int?
 
@@ -19,10 +18,6 @@ public struct MNQueueIterator<Element: Identifiable> {
     public init(_ elements: [Element]) {
         items = elements
         currIndex = !items.isEmpty ? 0 : nil // When there are items, set to 0, else nil
-        for index in 0...items.count{
-            indexedItems.append((index,items[index]))
-        }
-        print(indexedItems)
     }
 
     public var elements: [Element] { items }
