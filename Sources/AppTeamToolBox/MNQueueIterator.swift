@@ -67,6 +67,8 @@ public struct MNQueueIterator<Element: Identifiable> {
         // If there are items and index was previously invalid, start iterating from index zero
         if !items.isEmpty && currIndex == nil {
             currIndex = 0
+        } else if !items.isEmpty{
+            currIndex = 0
         }
 
         // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
