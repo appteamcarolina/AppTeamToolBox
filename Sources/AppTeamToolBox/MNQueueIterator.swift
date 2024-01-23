@@ -59,16 +59,15 @@ public struct MNQueueIterator<Element: Identifiable> {
         fixIndexIntoRange()
     }
     
-    public mutating func reorderItems(to elements: [Element]){
-//        let unsortedArrayID = Set(elements.map { $0.id })
-//        let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
+    public mutating func reorderItems(to elements: [Element], index:INT){
+        let unsortedArrayID = Set(elements.map { $0.id })
+        let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
         
         items = elements
         // If there are items and index was previously invalid, start iterating from index zero
         if !items.isEmpty && currIndex == nil {
             currIndex = 0
         }
-        print(items, "AFTERRRR_____\n\n\n\n")
         // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
         fixIndexIntoRange()
         
