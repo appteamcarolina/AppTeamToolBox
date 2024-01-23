@@ -42,6 +42,16 @@ public struct MNQueueIterator<Element: Identifiable> {
         currIndex! += 1
         fixIndexIntoRange()
     }
+    
+    public mutating func insert(_ element: Element, index: Int) {
+        if (index >= count){
+            items.append(Element)
+        } else{
+            items.insert(element, at: index)
+
+        }
+        fixIndexIntoRange()
+    }
 
     public mutating func insertAtCurrentIndex(_ element: Element) {
         if currIndex == nil { currIndex = 0 }
