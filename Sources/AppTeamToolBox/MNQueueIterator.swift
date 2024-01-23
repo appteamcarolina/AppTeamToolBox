@@ -10,7 +10,7 @@ import Foundation
 public struct MNQueueIterator<Element: Identifiable> {
     // MARK: PRIVATE
     
-    private var indexedItems: [(Int, String)] = []
+    private var indexedItems: [(Int, Element)] = []
     private var items: [Element]
     private var currIndex: Int?
 
