@@ -63,7 +63,7 @@ public struct MNQueueIterator<Element: Identifiable> {
         let unsortedArrayID = Set(elements.map { $0.id })
         let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
         
-        items = elements
+        items = sortedArray
         // If there are items and index was previously invalid, start iterating from index zero
         if !items.isEmpty && currIndex == nil {
             currIndex = 0
