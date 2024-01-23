@@ -54,7 +54,7 @@ public struct MNQueueIterator<Element: Identifiable> {
         fixIndexIntoRange()
     }
     
-    public mutating func reorderItems(to elements: [element]){
+    public mutating func reorderItems(to elements: [Element]){
 //        let unsortedArrayID = Set(elements.map { $0.id })
 //        let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
         
