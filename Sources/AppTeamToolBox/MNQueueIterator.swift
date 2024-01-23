@@ -68,9 +68,10 @@ public struct MNQueueIterator<Element: Identifiable> {
         if !items.isEmpty && currIndex == nil {
             currIndex = 0
         }
+        currIndex = index
+
         // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
         fixIndexIntoRange()
-        
     }
 
     public mutating func setAllItems(to elements: [Element]) {
