@@ -20,7 +20,7 @@ public struct MNQueueIterator<Element: Identifiable> {
         items = elements
         currIndex = !items.isEmpty ? 0 : nil // When there are items, set to 0, else nil
         for index in 0...items.count{
-            indexedItems.append([index,items[index]])
+            indexedItems.append((index,items[index]))
         }
         print(indexedItems)
     }
