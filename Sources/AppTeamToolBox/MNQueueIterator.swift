@@ -69,13 +69,13 @@ public struct MNQueueIterator<Element: Identifiable> {
         }
 
         if index != -1 {
-            if currIndex < index {
-                while currIndex < index {
-                    currIndex +=1
+            if currIndex! < index {
+                while currIndex! < index {
+                    currIndex = currIndex - 1
                 }
             } else {
-                while currIndex > index {
-                    currIndex -=1
+                while currIndex! > index {
+                    currIndex! = currIndex + 1
                 }
             }
         }
