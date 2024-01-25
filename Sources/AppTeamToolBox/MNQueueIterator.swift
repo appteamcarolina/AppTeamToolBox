@@ -69,15 +69,7 @@ public struct MNQueueIterator<Element: Identifiable> {
         }
 
         if index != -1 {
-            if currIndex! < index {
-                while currIndex! < index {
-                    currIndex! = currIndex! + 1
-                }
-            } else {
-                while currIndex! > index {
-                    currIndex! = currIndex! - 1
-                }
-            }
+            currIndex = index
         }
 
         // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
