@@ -9,7 +9,7 @@ import Foundation
 
 public struct MNQueueIterator<Element: Identifiable> {
     // MARK: PRIVATE
-    
+
     private var items: [Element]
     private var currIndex: Int?
 
@@ -42,13 +42,12 @@ public struct MNQueueIterator<Element: Identifiable> {
         currIndex! += 1
         fixIndexIntoRange()
     }
-    
-    public mutating func insertAt(_ element: Element, index: Int) {
-        if (index >= count){
-            items.append(element)
-        } else{
-            items.insert(element, at: index)
 
+    public mutating func insertAt(_ element: Element, index: Int) {
+        if index >= count {
+            items.append(element)
+        } else {
+            items.insert(element, at: index)
         }
         fixIndexIntoRange()
     }
@@ -58,19 +57,27 @@ public struct MNQueueIterator<Element: Identifiable> {
         items.insert(element, at: currIndex!)
         fixIndexIntoRange()
     }
-    
-    public mutating func reorderItems(to elements: [Element], index: Int){
+
+    public mutating func reorderItems(to elements: [Element], index: Int) {
         let unsortedArrayID = Set(elements.map { $0.id })
         let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
-        
+
         items = sortedArray
         // If there are items and index was previously invalid, start iterating from index zero
         if !items.isEmpty && currIndex == nil {
             currIndex = 0
         }
-        
-        if index != -1{
-            currIndex = index
+
+        if index != -1 {
+            if currIndex < index {
+                while currIndex < index {
+                    currIndex +=1
+                }
+            } else {
+                while currIndex > index {
+                    currIndex -=1
+                }
+            }
         }
 
         // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
@@ -86,7 +93,6 @@ public struct MNQueueIterator<Element: Identifiable> {
         // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
         fixIndexIntoRange()
     }
-    
 
     @discardableResult
     public mutating func removeCurrent() -> Element? {
@@ -95,7 +101,7 @@ public struct MNQueueIterator<Element: Identifiable> {
         let removedItem = items.remove(at: currIndex)
 
         fixIndexIntoRange() // Fix indices if currIndex is now invalid after the removal
-        
+
         return removedItem
     }
 
