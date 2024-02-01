@@ -59,7 +59,7 @@ public struct MNQueueIterator<Element: Identifiable> {
     }
 
     public mutating func reorderItems(to elements: [Element], index: Int) {
-        let unsortedArrayID = elements
+        let unsortedArrayID = elements.map { $0.id }
         print(items)
         let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
         
