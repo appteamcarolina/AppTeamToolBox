@@ -60,11 +60,13 @@ public struct MNQueueIterator<Element: Identifiable> {
 
     public mutating func reorderItems(to elements: [Element], index: Int) {
         let unsortedArrayID = elements.map { $0.id }
+        print(unsortedArrayID, "\n\n\n\n\n\n\n\n__________________")
+
         print(items, "\n\n\n\n\n\n\n\n__________________")
         let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
         
         items = sortedArray
-        print(items)
+        print(items, "\n\n\n\n\n\n\n\n__________________")
         // If there are items and index was previously invalid, start iterating from index zero
         if !items.isEmpty && currIndex == nil {
             currIndex = 0
