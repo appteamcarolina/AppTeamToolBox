@@ -60,10 +60,20 @@ public struct MNQueueIterator<Element: Identifiable> {
 
     public mutating func reorderItems(to elements: [Element], index: Int) {
         if index == -1{
-            let orderedElements = Set(elements.map { $0.id })
+            
+            var idToIndexMap = [Int: Int]()
+            
+            for (index, object) in elements.enumerated() {
+                idToIndexMap[object.id] = index
+            }
 
-            let orderedItems = elements.filter { element in orderedElements.contains(element.id) }
-                .compactMap { element in items.first(where: { $0.id == element.id }) }
+            let sortedItems = items.sorted { (obj1, obj2) -> Bool in
+                guard let index1 = idToIndexMap[obj1.id], let index2 = idToIndexMap[obj2.id] else {
+                    return false
+                }
+                return index1 < index2
+            }
+            items = sortedItems
             
         } else{
             let unsortedArrayID = elements.map { $0.id }
