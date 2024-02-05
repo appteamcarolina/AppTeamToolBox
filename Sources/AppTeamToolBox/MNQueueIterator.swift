@@ -61,7 +61,7 @@ public struct MNQueueIterator<Element: Identifiable> {
     public mutating func reorderItems(to elements: [Element], index: Int) {
         if index == -1{
             
-            var idToIndexMap = [String: Int]()
+            var idToIndexMap = [Element.ID: Int]()
             
             for (index, object) in elements.enumerated() {
                 idToIndexMap[object.id] = index
