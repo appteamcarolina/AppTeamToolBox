@@ -105,13 +105,16 @@ public struct MNQueueIterator<Element: Identifiable> {
 
     public mutating func setAllItems(to elements: [Element]) {
         items = elements
+        
         // If there are items and index was previously invalid, start iterating from index zero
         if !items.isEmpty && currIndex == nil {
             currIndex = 0
         }
+        
         // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
         fixIndexIntoRange()
     }
+    
 
     @discardableResult
     public mutating func removeCurrent() -> Element? {
@@ -120,7 +123,7 @@ public struct MNQueueIterator<Element: Identifiable> {
         let removedItem = items.remove(at: currIndex)
 
         fixIndexIntoRange() // Fix indices if currIndex is now invalid after the removal
-
+        
         return removedItem
     }
 
