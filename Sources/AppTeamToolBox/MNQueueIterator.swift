@@ -43,9 +43,63 @@ public struct MNQueueIterator<Element: Identifiable> {
         fixIndexIntoRange()
     }
 
+    public mutating func insertAt(_ element: Element, index: Int) {
+        if index >= count {
+            items.append(element)
+        } else {
+            items.insert(element, at: index)
+        }
+        fixIndexIntoRange()
+    }
+
     public mutating func insertAtCurrentIndex(_ element: Element) {
         if currIndex == nil { currIndex = 0 }
         items.insert(element, at: currIndex!)
+        fixIndexIntoRange()
+    }
+
+    // Given a certain sorted array, this function determines whether to sort it based on a superset of a larger array, or an array simply in a different order.
+    public mutating func reorderItems(to elements: [Element], index: Int) {
+        // If the index is equal to 0, it indicates that the elements passed through as an argument is a larger array, and items is the subset of elements.
+        if index == -1 {
+            // This creates a dictionary that has keys of element ID and items of the index of the array
+            var elementIndexDictionary = [Element.ID: Int]()
+
+            for (index, object) in elements.enumerated() {
+                elementIndexDictionary[object.id] = index
+            }
+
+            // Sorts 'items' based on their order in 'elementIndexDictionary', comparing indices to determine sort order, defaulting to 'false' for undefined indices.
+            let sortedItems = items.sorted { obj1, obj2 -> Bool in
+                guard let index1 = elementIndexDictionary[obj1.id], let index2 = elementIndexDictionary[obj2.id] else {
+                    return false
+                }
+                return index1 < index2
+            }
+            items = sortedItems
+
+        } else {
+            // Maps each element in 'elements' to its 'id', creating an array of IDs.
+            let unsortedArrayID = elements.map { $0.id }
+
+            // Filters 'items' to include only those whose 'id' is found in 'unsortedArrayID'.
+            let sortedArray = items.filter { unsortedArrayID.contains($0.id) }
+
+            // Updates 'items' to be the filtered list, effectively removing any items not present in 'elements'.
+            items = sortedArray
+        }
+
+        // If there are items and index was previously invalid, start iterating from index zero
+        if !items.isEmpty && currIndex == nil {
+            currIndex = 0
+        }
+
+        // If the index is not negative, it changes it to the index that's passed through the function.
+        if index != -1 {
+            currIndex = index
+        }
+
+        // If the new items array has less elements than before, make sure currentIndex isn't out of bounds
         fixIndexIntoRange()
     }
 
